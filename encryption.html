@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge - Digital Tool Suite</title>
+    <meta name="description" content="Free, open-source digital tools for students, creators, business owners, and employees. A comprehensive suite to boost your productivity.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        forge: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in forwards',
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.2), 0 10px 10px -5px rgba(249, 115, 22, 0.1);
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .animate-delay-100 {
+            animation-delay: 0.1s;
+        }
+        .animate-delay-200 {
+            animation-delay: 0.2s;
+        }
+        .animate-delay-300 {
+            animation-delay: 0.3s;
+        }
+        .animate-delay-400 {
+            animation-delay: 0.4s;
+        }
+        .animate-delay-500 {
+            animation-delay: 0.5s;
+        }
+        .header-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-white font-sans text-gray-800 antialiased">
+<!-- Updated Navigation Section -->
+<!-- Updated Navigation Section -->
+<!-- Updated Navigation Section -->
+<nav class="fixed w-full bg-white/80 header-blur shadow-sm z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex items-center">
+                <a href="#" class="flex items-center space-x-2">
+                    <img src="images/logo.svg" alt="Forge Logo" class="h-8 w-auto">
+                    <span class="text-xl font-medium text-gray-900">Forge</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">Features</a>
+                
+                <!-- Tools Dropdown -->
+                <div class="relative group" x-data="{ open: false, activeCategory: 'productivity' }" @mouseenter="open = true" @mouseleave="open = false">
+                    <button class="text-gray-600 hover:text-forge-600 transition-colors font-medium flex items-center">
+                        Tools
+                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Dropdown Panel -->
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" 
+                         x-transition:enter-start="opacity-0 translate-y-1" 
+                         x-transition:enter-end="opacity-100 translate-y-0" 
+                         x-transition:leave="transition ease-in duration-150" 
+                         x-transition:leave-start="opacity-100 translate-y-0" 
+                         x-transition:leave-end="opacity-0 translate-y-1"
+                         class="absolute left-0 mt-2 w-[600px] bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
+                         @mouseenter="open = true" @mouseleave="open = false">
+                        <div class="grid grid-cols-3">
+                            <!-- Categories Column -->
+                            <div class="col-span-1 bg-gray-50 p-4">
+                                <h3 class="font-medium text-gray-900 mb-3">Categories</h3>
+                                <ul class="space-y-2">
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'productivity'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'productivity', 'text-gray-700': activeCategory !== 'productivity' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Productivity
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'design'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'design', 'text-gray-700': activeCategory !== 'design' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Design
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'data'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'data', 'text-gray-700': activeCategory !== 'data' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Data Tools
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'writing'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'writing', 'text-gray-700': activeCategory !== 'writing' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Writing
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Tools Column -->
+                            <div class="col-span-2 p-4">
+                                <!-- Productivity Tools -->
+                                <div x-show="activeCategory === 'productivity'" class="space-y-3">
+                                    <h4 class="font-medium text-gray-900 mb-2">Productivity Tools</h4>
+                                    <a href="./tasks.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Task Manager</p>
+                                        <p class="text-sm text-gray-500">Organize your tasks and to-dos</p>
+                                    </a>
+                                    <a href="./calander.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Calendar</p>
+                                        <p class="text-sm text-gray-500">Manage your schedule and events</p>
+                                    </a>
+                                    <a href="./qrcode.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">QR Code Generator</p>
+                                        <p class="text-sm text-gray-500">Create QR codes for any content</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Design Tools -->
+                                <div x-show="activeCategory === 'design'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Design Tools</h4>
+                                    <a href="./designer.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Designer</p>
+                                        <p class="text-sm text-gray-500">Create graphics and visual designs</p>
+                                    </a>
+                                    <a href="./whiteboard.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Whiteboard</p>
+                                        <p class="text-sm text-gray-500">Collaborate visually in real-time</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Data Tools -->
+                                <div x-show="activeCategory === 'data'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Data Tools</h4>
+                                    <a href="./datavisualization.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Data Visualization</p>
+                                        <p class="text-sm text-gray-500">Transform data into visual insights</p>
+                                    </a>
+                                    <a href="./compressor.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">File Compressor</p>
+                                        <p class="text-sm text-gray-500">Reduce file sizes efficiently</p>
+                                    </a>
+                                    <a href="./encryption.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Encryption Tool</p>
+                                        <p class="text-sm text-gray-500">Secure your sensitive data</p>
+                                    </a>
+                                    <a href="./spreadsheets.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Spreadsheets</p>
+                                        <p class="text-sm text-gray-500">Analyze and organize data</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Writing Tools -->
+                                <div x-show="activeCategory === 'writing'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Writing Tools</h4>
+                                    <a href="./grammar.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Grammar Checker</p>
+                                        <p class="text-sm text-gray-500">Improve your writing quality</p>
+                                    </a>
+                                    <a href="./notes.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Notes</p>
+                                        <p class="text-sm text-gray-500">Capture and organize your thoughts</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#pricing" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">Pricing</a>
+                <a href="#faq" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">FAQ</a>
+            </div>
+            <div class="flex items-center">
+                <a href="#get-started" class="hidden md:block px-4 py-2 rounded-lg bg-forge-600 text-white font-medium hover:bg-forge-700 transition-colors shadow-md">
+                    Get Started
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-forge-600 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Features</a>
+            <a href="#tools" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Tools</a>
+            <a href="#pricing" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Pricing</a>
+            <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">FAQ</a>
+            <a href="#get-started" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-forge-600 hover:bg-forge-700">Get Started</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Add this right before your closing </body> tag -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<!-- Updated JavaScript -->
+<script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', function() {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('hidden');
+        
+        // Toggle between menu and close icon
+        if (!isExpanded) {
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            `;
+        } else {
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        }
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        });
+    });
+
+    // FAQ toggle functionality
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            
+            // Toggle content visibility
+            content.classList.toggle('hidden');
+            
+            // Toggle icon rotation
+            icon.classList.toggle('rotate-180');
+            
+            // Close other open FAQs
+            document.querySelectorAll('.faq-toggle').forEach(otherButton => {
+                if (otherButton !== button) {
+                    otherButton.nextElementSibling.classList.add('hidden');
+                    otherButton.querySelector('svg').classList.remove('rotate-180');
+                }
+            });
+        });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Animation on scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.animate-fade-in-up');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
+            
+            if (elementPosition < screenPosition) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    // Run once on page load
+    animateOnScroll();
+    
+    // Run on scroll
+    window.addEventListener('scroll', animateOnScroll);
+</script>
+
+<section id="encryption-tool" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-forge-100 text-forge-800 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        Security Tools
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Encryption</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Secure your sensitive text and files with client-side encryption
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Encryption Options -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+        <div class="p-4 bg-gray-50 border-b border-gray-200">
+          <h3 class="font-medium text-gray-900">Encryption Options</h3>
+        </div>
+        <div class="p-4">
+          <div class="space-y-4">
+            <div>
+              <label for="encryption-type" class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+              <select id="encryption-type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-forge-500 focus:border-forge-500">
+                <option value="text">Text Encryption</option>
+                <option value="file">File Encryption</option>
+              </select>
+            </div>
+            
+            <div>
+              <label for="algorithm" class="block text-sm font-medium text-gray-700 mb-1">Algorithm</label>
+              <select id="algorithm" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-forge-500 focus:border-forge-500">
+                <option value="AES-GCM">AES-GCM (Recommended)</option>
+                <option value="AES-CBC">AES-CBC</option>
+              </select>
+            </div>
+            
+            <div>
+              <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <div class="relative">
+                <input type="password" id="password" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-forge-500 focus:border-forge-500 pr-10">
+                <button id="toggle-password" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </button>
+              </div>
+              <p class="mt-1 text-xs text-gray-500">Minimum 8 characters</p>
+            </div>
+            
+            <div class="pt-2">
+              <button id="encrypt-btn" class="w-full gradient-bg text-white py-2 px-4 rounded-md font-medium hover:opacity-90 transition-opacity">
+                Encrypt
+              </button>
+              <button id="decrypt-btn" class="w-full mt-2 bg-white border border-forge-600 text-forge-600 py-2 px-4 rounded-md font-medium hover:bg-forge-50 transition-colors">
+                Decrypt
+              </button>
+            </div>
+          </div>
+          
+          <div class="mt-6 pt-4 border-t border-gray-200">
+            <h4 class="text-sm font-medium text-gray-700 mb-2">Recent Operations</h4>
+            <div class="space-y-2 max-h-48 overflow-y-auto" id="history-list">
+              <!-- History items will be added here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Encryption Panel -->
+      <div id="text-panel" class="md:col-span-2">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 h-full">
+          <div class="p-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+            <h3 class="font-medium text-gray-900">Text Encryption</h3>
+            <div class="flex space-x-2">
+              <button id="copy-text" class="p-1 text-gray-600 hover:text-forge-600 transition-colors" title="Copy">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                </svg>
+              </button>
+              <button id="clear-text" class="p-1 text-gray-600 hover:text-red-600 transition-colors" title="Clear">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="p-4 h-full">
+            <div class="flex border-b border-gray-200 mb-4">
+              <button data-mode="input" class="tab-btn py-2 px-4 font-medium text-forge-600 border-b-2 border-forge-600">Input</button>
+              <button data-mode="output" class="tab-btn py-2 px-4 font-medium text-gray-500 hover:text-forge-600">Output</button>
+            </div>
+            <textarea id="text-input" class="w-full h-96 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-forge-500 focus:border-forge-500 font-mono" placeholder="Enter text to encrypt or paste encrypted data to decrypt"></textarea>
+            <div id="text-output" class="w-full h-96 p-3 border border-gray-300 rounded-md font-mono bg-gray-50 hidden overflow-auto whitespace-pre-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- File Encryption Panel (hidden by default) -->
+      <div id="file-panel" class="md:col-span-2 hidden">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 h-full">
+          <div class="p-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+            <h3 class="font-medium text-gray-900">File Encryption</h3>
+            <div class="flex space-x-2">
+              <button id="download-file" class="p-1 text-gray-600 hover:text-forge-600 transition-colors hidden" title="Download">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </button>
+              <button id="clear-file" class="p-1 text-gray-600 hover:text-red-600 transition-colors" title="Clear">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="p-4 h-full">
+            <div class="flex border-b border-gray-200 mb-4">
+              <button data-mode="input" class="file-tab-btn py-2 px-4 font-medium text-forge-600 border-b-2 border-forge-600">Input</button>
+              <button data-mode="output" class="file-tab-btn py-2 px-4 font-medium text-gray-500 hover:text-forge-600">Output</button>
+            </div>
+            
+            <div id="file-input-container" class="h-96 border-2 border-dashed border-gray-300 rounded-md flex flex-col items-center justify-center p-6 text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <p class="text-gray-600 mb-2">Drag and drop files here or click to browse</p>
+              <input type="file" id="file-input" class="hidden">
+              <button id="browse-btn" class="mt-2 gradient-bg text-white py-2 px-4 rounded-md font-medium hover:opacity-90 transition-opacity text-sm">
+                Select File
+              </button>
+              <div id="file-input-info" class="mt-4 hidden">
+                <p class="font-medium text-gray-900" id="file-name"></p>
+                <p class="text-sm text-gray-500" id="file-size"></p>
+              </div>
+            </div>
+            
+            <div id="file-output-container" class="h-96 border-2 border-dashed border-gray-300 rounded-md hidden flex-col items-center justify-center p-6 text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <p class="text-gray-600 mb-4">Your encrypted/decrypted file is ready</p>
+              <div class="flex space-x-3">
+                <button id="download-output-btn" class="gradient-bg text-white py-2 px-4 rounded-md font-medium hover:opacity-90 transition-opacity text-sm">
+                  Download File
+                </button>
+                <button id="clear-output-btn" class="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md font-medium hover:bg-gray-50 transition-colors text-sm">
+                  Clear
+                </button>
+              </div>
+              <div id="file-output-info" class="mt-4 hidden">
+                <p class="font-medium text-gray-900" id="output-file-name"></p>
+                <p class="text-sm text-gray-500" id="output-file-size"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // DOM Elements
+  const encryptionType = document.getElementById('encryption-type');
+  const algorithmSelect = document.getElementById('algorithm');
+  const passwordInput = document.getElementById('password');
+  const togglePasswordBtn = document.getElementById('toggle-password');
+  const encryptBtn = document.getElementById('encrypt-btn');
+  const decryptBtn = document.getElementById('decrypt-btn');
+  const historyList = document.getElementById('history-list');
+  const textPanel = document.getElementById('text-panel');
+  const filePanel = document.getElementById('file-panel');
+  const textInput = document.getElementById('text-input');
+  const textOutput = document.getElementById('text-output');
+  const copyTextBtn = document.getElementById('copy-text');
+  const clearTextBtn = document.getElementById('clear-text');
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const fileTabBtns = document.querySelectorAll('.file-tab-btn');
+  const fileInputContainer = document.getElementById('file-input-container');
+  const fileInput = document.getElementById('file-input');
+  const browseBtn = document.getElementById('browse-btn');
+  const fileInputInfo = document.getElementById('file-input-info');
+  const fileName = document.getElementById('file-name');
+  const fileSize = document.getElementById('file-size');
+  const fileOutputContainer = document.getElementById('file-output-container');
+  const downloadFileBtn = document.getElementById('download-file');
+  const clearFileBtn = document.getElementById('clear-file');
+  const downloadOutputBtn = document.getElementById('download-output-btn');
+  const clearOutputBtn = document.getElementById('clear-output-btn');
+  const fileOutputInfo = document.getElementById('file-output-info');
+  const outputFileName = document.getElementById('output-file-name');
+  const outputFileSize = document.getElementById('output-file-size');
+
+  // State
+  let currentFile = null;
+  let processedFile = null;
+  let history = JSON.parse(localStorage.getItem('forge-encryption-history')) || [];
+
+  // Initialize
+  function init() {
+    renderHistory();
+    setupEventListeners();
+  }
+
+  // Set up event listeners
+  function setupEventListeners() {
+    // Toggle password visibility
+    togglePasswordBtn.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      togglePasswordBtn.innerHTML = type === 'password' ? 
+        `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>` :
+        `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+        </svg>`;
+    });
+
+    // Switch between text and file encryption
+    encryptionType.addEventListener('change', (e) => {
+      if (e.target.value === 'text') {
+        textPanel.classList.remove('hidden');
+        filePanel.classList.add('hidden');
+      } else {
+        textPanel.classList.add('hidden');
+        filePanel.classList.remove('hidden');
+      }
+    });
+
+    // Text encryption tabs
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => {
+          b.classList.remove('text-forge-600', 'border-forge-600');
+          b.classList.add('text-gray-500', 'hover:text-forge-600');
+        });
+        btn.classList.add('text-forge-600', 'border-forge-600');
+        btn.classList.remove('text-gray-500', 'hover:text-forge-600');
+        
+        if (btn.dataset.mode === 'input') {
+          textInput.classList.remove('hidden');
+          textOutput.classList.add('hidden');
+        } else {
+          textInput.classList.add('hidden');
+          textOutput.classList.remove('hidden');
+        }
+      });
+    });
+
+    // File encryption tabs
+    fileTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        fileTabBtns.forEach(b => {
+          b.classList.remove('text-forge-600', 'border-forge-600');
+          b.classList.add('text-gray-500', 'hover:text-forge-600');
+        });
+        btn.classList.add('text-forge-600', 'border-forge-600');
+        btn.classList.remove('text-gray-500', 'hover:text-forge-600');
+        
+        if (btn.dataset.mode === 'input') {
+          fileInputContainer.classList.remove('hidden');
+          fileOutputContainer.classList.add('hidden');
+        } else {
+          fileInputContainer.classList.add('hidden');
+          fileOutputContainer.classList.remove('hidden');
+        }
+      });
+    });
+
+    // Copy text button
+    copyTextBtn.addEventListener('click', () => {
+      if (!textOutput.classList.contains('hidden')) {
+        navigator.clipboard.writeText(textOutput.textContent);
+        showToast('Copied to clipboard!');
+      }
+    });
+
+    // Clear text button
+    clearTextBtn.addEventListener('click', () => {
+      textInput.value = '';
+      textOutput.textContent = '';
+      textOutput.classList.add('hidden');
+      tabBtns[0].click();
+    });
+
+    // File input handling
+    browseBtn.addEventListener('click', () => fileInput.click());
+    
+    fileInput.addEventListener('change', handleFileSelect);
+    
+    // Drag and drop for files
+    fileInputContainer.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileInputContainer.classList.add('border-forge-500', 'bg-forge-50');
+    });
+    
+    fileInputContainer.addEventListener('dragleave', () => {
+      fileInputContainer.classList.remove('border-forge-500', 'bg-forge-50');
+    });
+    
+    fileInputContainer.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileInputContainer.classList.remove('border-forge-500', 'bg-forge-50');
+      
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelect({ target: fileInput });
+      }
+    });
+
+    // Clear file button
+    clearFileBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      fileInputInfo.classList.add('hidden');
+      currentFile = null;
+    });
+
+    // Clear output button
+    clearOutputBtn.addEventListener('click', () => {
+      processedFile = null;
+      fileOutputInfo.classList.add('hidden');
+      fileTabBtns[0].click();
+    });
+
+    // Download output button
+    downloadOutputBtn.addEventListener('click', downloadProcessedFile);
+
+    // Encrypt/Decrypt buttons
+    encryptBtn.addEventListener('click', handleEncrypt);
+    decryptBtn.addEventListener('click', handleDecrypt);
+  }
+
+  // Handle file selection
+  function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    currentFile = file;
+    fileName.textContent = file.name;
+    fileSize.textContent = formatFileSize(file.size);
+    fileInputInfo.classList.remove('hidden');
+  }
+
+  // Format file size
+  function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+  }
+
+  // Handle encryption
+  async function handleEncrypt() {
+    const password = passwordInput.value;
+    if (!password || password.length < 8) {
+      showToast('Please enter a password with at least 8 characters');
+      return;
+    }
+    
+    if (encryptionType.value === 'text') {
+      await encryptText();
+    } else {
+      await encryptFile();
+    }
+  }
+
+  // Handle decryption
+  async function handleDecrypt() {
+    const password = passwordInput.value;
+    if (!password || password.length < 8) {
+      showToast('Please enter a password with at least 8 characters');
+      return;
+    }
+    
+    if (encryptionType.value === 'text') {
+      await decryptText();
+    } else {
+      await decryptFile();
+    }
+  }
+
+  // Encrypt text
+  async function encryptText() {
+    const text = textInput.value.trim();
+    if (!text) {
+      showToast('Please enter some text to encrypt');
+      return;
+    }
+    
+    try {
+      const algorithm = algorithmSelect.value;
+      const password = passwordInput.value;
+      
+      const encrypted = await encryptData(text, password, algorithm);
+      textOutput.textContent = encrypted;
+      textOutput.classList.remove('hidden');
+      tabBtns[1].click();
+      
+      addToHistory('encrypt', 'text', algorithm);
+      showToast('Text encrypted successfully!');
+    } catch (error) {
+      console.error('Encryption error:', error);
+      showToast('Encryption failed. Please try again.');
+    }
+  }
+
+  // Decrypt text
+  async function decryptText() {
+    const text = textInput.value.trim();
+    if (!text) {
+      showToast('Please enter some text to decrypt');
+      return;
+    }
+    
+    try {
+      const algorithm = algorithmSelect.value;
+      const password = passwordInput.value;
+      
+      const decrypted = await decryptData(text, password, algorithm);
+      textOutput.textContent = decrypted;
+      textOutput.classList.remove('hidden');
+      tabBtns[1].click();
+      
+      addToHistory('decrypt', 'text', algorithm);
+      showToast('Text decrypted successfully!');
+    } catch (error) {
+      console.error('Decryption error:', error);
+      showToast('Decryption failed. Wrong password or corrupted data.');
+    }
+  }
+
+  // Encrypt file
+  async function encryptFile() {
+    if (!currentFile) {
+      showToast('Please select a file to encrypt');
+      return;
+    }
+    
+    try {
+      const algorithm = algorithmSelect.value;
+      const password = passwordInput.value;
+      
+      const fileBuffer = await readFileAsArrayBuffer(currentFile);
+      const encryptedData = await encryptData(fileBuffer, password, algorithm);
+      
+      processedFile = new Blob([encryptedData], { type: 'application/octet-stream' });
+      outputFileName.textContent = currentFile.name + '.enc';
+      outputFileSize.textContent = formatFileSize(processedFile.size);
+      fileOutputInfo.classList.remove('hidden');
+      fileTabBtns[1].click();
+      
+      addToHistory('encrypt', 'file', algorithm, currentFile.name);
+      showToast('File encrypted successfully!');
+    } catch (error) {
+      console.error('File encryption error:', error);
+      showToast('File encryption failed. Please try again.');
+    }
+  }
+
+  // Decrypt file
+  async function decryptFile() {
+    if (!currentFile) {
+      showToast('Please select a file to decrypt');
+      return;
+    }
+    
+    try {
+      const algorithm = algorithmSelect.value;
+      const password = passwordInput.value;
+      
+      const fileBuffer = await readFileAsArrayBuffer(currentFile);
+      const decryptedData = await decryptData(fileBuffer, password, algorithm);
+      
+      // Try to determine the original file name
+      let originalName = currentFile.name;
+      if (originalName.endsWith('.enc')) {
+        originalName = originalName.slice(0, -4);
+      }
+      
+      processedFile = new Blob([decryptedData], { type: 'application/octet-stream' });
+      outputFileName.textContent = originalName;
+      outputFileSize.textContent = formatFileSize(processedFile.size);
+      fileOutputInfo.classList.remove('hidden');
+      fileTabBtns[1].click();
+      
+      addToHistory('decrypt', 'file', algorithm, currentFile.name);
+      showToast('File decrypted successfully!');
+    } catch (error) {
+      console.error('File decryption error:', error);
+      showToast('File decryption failed. Wrong password or corrupted data.');
+    }
+  }
+
+  // Read file as ArrayBuffer
+  function readFileAsArrayBuffer(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  // Download processed file
+  function downloadProcessedFile() {
+    if (!processedFile) return;
+    
+    const url = URL.createObjectURL(processedFile);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = outputFileName.textContent || 'processed-file';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // Add operation to history
+  function addToHistory(operation, type, algorithm, fileName = null) {
+    const entry = {
+      id: Date.now(),
+      operation,
+      type,
+      algorithm,
+      fileName,
+      timestamp: new Date().toISOString()
+    };
+    
+    history.unshift(entry);
+    if (history.length > 10) history.pop();
+    
+    localStorage.setItem('forge-encryption-history', JSON.stringify(history));
+    renderHistory();
+  }
+
+  // Render history list
+  function renderHistory() {
+    historyList.innerHTML = '';
+    
+    if (history.length === 0) {
+      historyList.innerHTML = '<p class="text-gray-500 text-center py-4">No history yet</p>';
+      return;
+    }
+    
+    history.forEach(entry => {
+      const item = document.createElement('div');
+      item.className = 'p-2 rounded-md hover:bg-gray-100 cursor-pointer flex justify-between items-center text-sm';
+      item.innerHTML = `
+        <div class="flex items-center">
+          <span class="w-6 h-6 rounded-full flex items-center justify-center mr-2 ${
+            entry.operation === 'encrypt' ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'
+          }">
+            ${entry.operation === 'encrypt' ? 'E' : 'D'}
+          </span>
+          <span class="truncate">${entry.fileName || entry.type}</span>
+        </div>
+        <span class="text-xs text-gray-500 whitespace-nowrap ml-2">${new Date(entry.timestamp).toLocaleTimeString()}</span>
+      `;
+      
+      item.addEventListener('click', () => loadFromHistory(entry));
+      historyList.appendChild(item);
+    });
+  }
+
+  // Load from history
+  function loadFromHistory(entry) {
+    encryptionType.value = entry.type;
+    algorithmSelect.value = entry.algorithm;
+    
+    if (entry.type === 'text') {
+      encryptionType.dispatchEvent(new Event('change'));
+      // In a real app, you might want to load the actual content
+      showToast(`Loaded ${entry.operation} operation for text`);
+    } else {
+      encryptionType.dispatchEvent(new Event('change'));
+      // In a real app, you might want to load the file reference
+      showToast(`Loaded ${entry.operation} operation for ${entry.fileName}`);
+    }
+  }
+
+  // Show toast notification
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-md shadow-lg transform translate-y-2 opacity-0 transition-all duration-300';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.classList.remove('translate-y-2', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+    }, 10);
+    
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-2', 'opacity-0');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Crypto functions
+  async function encryptData(data, password, algorithm = 'AES-GCM') {
+    // Convert data to Uint8Array if it's a string
+    let dataBytes;
+    if (typeof data === 'string') {
+      const encoder = new TextEncoder();
+      dataBytes = encoder.encode(data);
+    } else if (data instanceof ArrayBuffer) {
+      dataBytes = new Uint8Array(data);
+    } else {
+      throw new Error('Unsupported data type');
+    }
+    
+    // Generate salt and derive key
+    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+    const keyMaterial = await getKeyMaterial(password);
+    const key = await deriveKey(keyMaterial, salt, algorithm);
+    
+    // Generate IV
+    const iv = window.crypto.getRandomValues(new Uint8Array(12)); // 96 bits for AES-GCM
+    
+    // Encrypt the data
+    const ciphertext = await window.crypto.subtle.encrypt(
+      {
+        name: algorithm,
+        iv: iv
+      },
+      key,
+      dataBytes
+    );
+    
+    // Combine salt, iv, and ciphertext
+    const result = new Uint8Array(salt.length + iv.length + ciphertext.byteLength);
+    result.set(salt, 0);
+    result.set(iv, salt.length);
+    result.set(new Uint8Array(ciphertext), salt.length + iv.length);
+    
+    // Return as base64 string
+    return btoa(String.fromCharCode.apply(null, result));
+  }
+
+  async function decryptData(encryptedData, password, algorithm = 'AES-GCM') {
+    // Convert from base64 to Uint8Array
+    const encryptedBytes = Uint8Array.from(atob(encryptedData), c => c.charCodeAt(0));
+    
+    // Extract salt, iv, and ciphertext
+    const salt = encryptedBytes.slice(0, 16);
+    const iv = encryptedBytes.slice(16, 16 + 12);
+    const ciphertext = encryptedBytes.slice(16 + 12);
+    
+    // Derive key
+    const keyMaterial = await getKeyMaterial(password);
+    const key = await deriveKey(keyMaterial, salt, algorithm);
+    
+    // Decrypt the data
+    let decryptedBytes;
+    try {
+      decryptedBytes = await window.crypto.subtle.decrypt(
+        {
+          name: algorithm,
+          iv: iv
+        },
+        key,
+        ciphertext
+      );
+    } catch (error) {
+      throw new Error('Decryption failed - wrong password or corrupted data');
+    }
+    
+    // Return as string or ArrayBuffer based on content
+    try {
+      const decoder = new TextDecoder();
+      return decoder.decode(decryptedBytes);
+    } catch {
+      return decryptedBytes;
+    }
+  }
+
+  async function getKeyMaterial(password) {
+    const encoder = new TextEncoder();
+    return window.crypto.subtle.importKey(
+      'raw',
+      encoder.encode(password),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveBits', 'deriveKey']
+    );
+  }
+
+  async function deriveKey(keyMaterial, salt, algorithm) {
+    return window.crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: salt,
+        iterations: 100000,
+        hash: 'SHA-256'
+      },
+      keyMaterial,
+      { name: algorithm, length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
+  // Initialize the app
+  init();
+});
+</script>
+
+    <!-- Zoho-inspired Footer -->
+    <footer class="bg-gray-100 text-gray-600 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div class="col-span-2">
+                    <a href="#" class="flex items-center space-x-2 mb-6">
+                        <img src="images/logo.svg" alt="Forge Logo" class="h-8 w-auto">
+                        <span class="text-xl font-medium text-gray-900">Forge</span>
+                    </a>
+                    <p class="text-sm mb-6">
+                        The complete open-source toolkit for creators, students, and professionals.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-forge-600 transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-forge-600 transition-colors">
+                            <span class="sr-only">GitHub</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Product</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-sm hover:text-forge-600 transition-colors">Features</a></li>
+                        <li><a href="#tools" class="text-sm hover:text-forge-600 transition-colors">Tools</a></li>
+                        <li><a href="#pricing" class="text-sm hover:text-forge-600 transition-colors">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Resources</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">About</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm">
+                    &copy; 2023 Forge. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex space-x-6">
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Privacy</a>
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Terms</a>
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

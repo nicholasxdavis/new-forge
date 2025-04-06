@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge - Digital Tool Suite</title>
+    <meta name="description" content="Free, open-source digital tools for students, creators, business owners, and employees. A comprehensive suite to boost your productivity.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        forge: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in forwards',
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.2), 0 10px 10px -5px rgba(249, 115, 22, 0.1);
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .animate-delay-100 {
+            animation-delay: 0.1s;
+        }
+        .animate-delay-200 {
+            animation-delay: 0.2s;
+        }
+        .animate-delay-300 {
+            animation-delay: 0.3s;
+        }
+        .animate-delay-400 {
+            animation-delay: 0.4s;
+        }
+        .animate-delay-500 {
+            animation-delay: 0.5s;
+        }
+        .header-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-white font-sans text-gray-800 antialiased">
+<!-- Updated Navigation Section -->
+<!-- Updated Navigation Section -->
+<nav class="fixed w-full bg-white/80 header-blur shadow-sm z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex items-center">
+                <a href="#" class="flex items-center space-x-2">
+                    <img src="images/logo.svg" alt="Forge Logo" class="h-8 w-auto">
+                    <span class="text-xl font-medium text-gray-900">Forge</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">Features</a>
+                
+                <!-- Tools Dropdown -->
+                <div class="relative group" x-data="{ open: false, activeCategory: 'productivity' }" @mouseenter="open = true" @mouseleave="open = false">
+                    <button class="text-gray-600 hover:text-forge-600 transition-colors font-medium flex items-center">
+                        Tools
+                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Dropdown Panel -->
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" 
+                         x-transition:enter-start="opacity-0 translate-y-1" 
+                         x-transition:enter-end="opacity-100 translate-y-0" 
+                         x-transition:leave="transition ease-in duration-150" 
+                         x-transition:leave-start="opacity-100 translate-y-0" 
+                         x-transition:leave-end="opacity-0 translate-y-1"
+                         class="absolute left-0 mt-2 w-[600px] bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
+                         @mouseenter="open = true" @mouseleave="open = false">
+                        <div class="grid grid-cols-3">
+                            <!-- Categories Column -->
+                            <div class="col-span-1 bg-gray-50 p-4">
+                                <h3 class="font-medium text-gray-900 mb-3">Categories</h3>
+                                <ul class="space-y-2">
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'productivity'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'productivity', 'text-gray-700': activeCategory !== 'productivity' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Productivity
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'design'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'design', 'text-gray-700': activeCategory !== 'design' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Design
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'data'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'data', 'text-gray-700': activeCategory !== 'data' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Data Tools
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'writing'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'writing', 'text-gray-700': activeCategory !== 'writing' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Writing
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Tools Column -->
+                            <div class="col-span-2 p-4">
+                                <!-- Productivity Tools -->
+                                <div x-show="activeCategory === 'productivity'" class="space-y-3">
+                                    <h4 class="font-medium text-gray-900 mb-2">Productivity Tools</h4>
+                                    <a href="./tasks.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Task Manager</p>
+                                        <p class="text-sm text-gray-500">Organize your tasks and to-dos</p>
+                                    </a>
+                                    <a href="./calander.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Calendar</p>
+                                        <p class="text-sm text-gray-500">Manage your schedule and events</p>
+                                    </a>
+                                    <a href="./qrcode.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">QR Code Generator</p>
+                                        <p class="text-sm text-gray-500">Create QR codes for any content</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Design Tools -->
+                                <div x-show="activeCategory === 'design'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Design Tools</h4>
+                                    <a href="./designer.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Designer</p>
+                                        <p class="text-sm text-gray-500">Create graphics and visual designs</p>
+                                    </a>
+                                    <a href="./whiteboard.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Whiteboard</p>
+                                        <p class="text-sm text-gray-500">Collaborate visually in real-time</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Data Tools -->
+                                <div x-show="activeCategory === 'data'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Data Tools</h4>
+                                    <a href="./datavisualization.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Data Visualization</p>
+                                        <p class="text-sm text-gray-500">Transform data into visual insights</p>
+                                    </a>
+                                    <a href="./compressor.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">File Compressor</p>
+                                        <p class="text-sm text-gray-500">Reduce file sizes efficiently</p>
+                                    </a>
+                                    <a href="./encryption.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Encryption Tool</p>
+                                        <p class="text-sm text-gray-500">Secure your sensitive data</p>
+                                    </a>
+                                    <a href="./spreadsheets.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Spreadsheets</p>
+                                        <p class="text-sm text-gray-500">Analyze and organize data</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Writing Tools -->
+                                <div x-show="activeCategory === 'writing'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Writing Tools</h4>
+                                    <a href="./grammar.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Grammar Checker</p>
+                                        <p class="text-sm text-gray-500">Improve your writing quality</p>
+                                    </a>
+                                    <a href="./notes.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Notes</p>
+                                        <p class="text-sm text-gray-500">Capture and organize your thoughts</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#pricing" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">Pricing</a>
+                <a href="#faq" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">FAQ</a>
+            </div>
+            <div class="flex items-center">
+                <a href="#get-started" class="hidden md:block px-4 py-2 rounded-lg bg-forge-600 text-white font-medium hover:bg-forge-700 transition-colors shadow-md">
+                    Get Started
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-forge-600 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Features</a>
+            <a href="#tools" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Tools</a>
+            <a href="#pricing" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Pricing</a>
+            <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">FAQ</a>
+            <a href="#get-started" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-forge-600 hover:bg-forge-700">Get Started</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Add this right before your closing </body> tag -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<!-- Updated JavaScript -->
+<script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', function() {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('hidden');
+        
+        // Toggle between menu and close icon
+        if (!isExpanded) {
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            `;
+        } else {
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        }
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        });
+    });
+
+    // FAQ toggle functionality
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            
+            // Toggle content visibility
+            content.classList.toggle('hidden');
+            
+            // Toggle icon rotation
+            icon.classList.toggle('rotate-180');
+            
+            // Close other open FAQs
+            document.querySelectorAll('.faq-toggle').forEach(otherButton => {
+                if (otherButton !== button) {
+                    otherButton.nextElementSibling.classList.add('hidden');
+                    otherButton.querySelector('svg').classList.remove('rotate-180');
+                }
+            });
+        });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Animation on scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.animate-fade-in-up');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
+            
+            if (elementPosition < screenPosition) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    // Run once on page load
+    animateOnScroll();
+    
+    // Run on scroll
+    window.addEventListener('scroll', animateOnScroll);
+</script>
+
+    <!-- Hero Section - Mobile Optimized -->
+<section class="pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center text-center md:text-left">
+        <div class="space-y-6">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight" style="padding-top: 10px;" class="sm:pt-0">
+                <span class="gradient-text">Forge</span> Your Digital Future
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-600">
+                The complete open-source toolkit for creators, students, and professionals. Everything you need to build, create, and collaborate.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
+                <a href="#get-started" class="px-6 py-3 rounded-lg gradient-bg text-white font-medium hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl">
+                    Start Using Forge
+                </a>
+            </div>
+        </div>
+        <div class="relative">
+            <img src="https://illustrations.popsy.co/amber/designer.svg" alt="Digital tools illustration" class="w-full h-auto max-w-xs sm:max-w-md mx-auto">
+        </div>
+    </div>
+</section>
+
+
+    <!-- Features Section - Inspired by Shopify -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 mx-auto bg-gray-50">
+    <div class="text-center mb-16">
+        <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-forge-100 text-forge-800 mb-4">Features</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Forge Stands Out</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            A different approach to digital tools - open, flexible, and built for real work.
+        </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 max-w-[1000px] mx-auto">
+        <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 animate-fade-in-up">
+            <div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Blazing Fast</h3>
+            <p class="text-gray-600">Optimized for performance with near-instant load times. No waiting, just creating.</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 animate-fade-in-up animate-delay-100">
+            <div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Your Data, Always</h3>
+            <p class="text-gray-600">No tracking, no selling. We believe in complete data ownership and privacy.</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 animate-fade-in-up animate-delay-200">
+            <div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Open Ecosystem</h3>
+            <p class="text-gray-600">Built on open standards with an API-first approach. Extend and customize as you need.</p>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Tools Section - Inspired by Adobe/Spotify -->
+    <section id="tools" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-forge-100 text-forge-800 mb-4">Tools</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Complete Creative Suite</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Professional-grade tools without the complexity or cost.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tool Card 1 -->
+                <div class="tool-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-forge-100 flex items-center justify-center mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-forge-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold">Document Editor</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Rich text editing with real-time collaboration and version history.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Markdown</span>
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Collaboration</span>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 2 -->
+                <div class="tool-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up animate-delay-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-forge-100 flex items-center justify-center mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-forge-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold">Spreadsheets</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Powerful data analysis with formulas, pivot tables, and visualization.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Formulas</span>
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Charts</span>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 3 -->
+                <div class="tool-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up animate-delay-200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-forge-100 flex items-center justify-center mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-forge-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18v4H3V4z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold">Presentations</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Create stunning slides with animations and multimedia support.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Templates</span>
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Animations</span>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 4 -->
+                <div class="tool-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up animate-delay-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-forge-100 flex items-center justify-center mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-forge-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold">Notes & Docs</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Organized note-taking with rich formatting and search.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Markdown</span>
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Tags</span>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 5 -->
+                <div class="tool-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up animate-delay-400">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-forge-100 flex items-center justify-center mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-forge-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold">Calendar</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Smart scheduling with reminders and team availability.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Reminders</span>
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Teams</span>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 6 -->
+                <div class="tool-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up animate-delay-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-forge-100 flex items-center justify-center mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-forge-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold">Whiteboard</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Visual collaboration with infinite canvas and sticky notes.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Collaboration</span>
+                        <span class="px-2 py-1 text-xs rounded-full bg-forge-100 text-forge-800">Templates</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section - Inspired by Stripe -->
+    <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8  mx-auto bg-gray-50">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-forge-100 text-forge-800 mb-4">Pricing</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Simple, Flexible Plans</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Choose what works for you. All plans include all tools - we just limit storage and advanced features.
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <!-- Free Tier -->
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 animate-fade-in-up">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">Starter</h3>
+                    <p class="text-gray-600">For individuals and small projects</p>
+                </div>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-gray-900">$0</span>
+                    <span class="text-gray-600">/forever</span>
+                </div>
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>All core tools</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>5GB storage</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Basic templates</span>
+                    </div>
+                </div>
+                <a href="#get-started" class="block w-full px-4 py-3 bg-gray-100 text-gray-800 font-medium rounded-lg text-center hover:bg-gray-200 transition-colors">
+                    Get Started
+                </a>
+            </div>
+            
+            <!-- Pro Tier -->
+            <div class="bg-white p-8 rounded-xl shadow-md border-2 border-forge-500 relative animate-fade-in-up animate-delay-200">
+                <div class="absolute top-0 right-0 bg-forge-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                    Popular
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">Creator</h3>
+                    <p class="text-gray-600">For professionals and growing teams</p>
+                </div>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-gray-900">$9</span>
+                    <span class="text-gray-600">/month</span>
+                </div>
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Everything in Starter</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>50GB storage</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Premium templates</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Advanced analytics</span>
+                    </div>
+                </div>
+                <a href="#get-started" class="block w-full px-4 py-3 gradient-bg text-white font-medium rounded-lg text-center hover:opacity-90 transition-opacity">
+                    Upgrade Now
+                </a>
+            </div>
+            
+            <!-- Unlimited Tier -->
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 animate-fade-in-up animate-delay-400">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">Unlimited</h3>
+                    <p class="text-gray-600">For power users and teams</p>
+                </div>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-gray-900">$29</span>
+                    <span class="text-gray-600">/month</span>
+                </div>
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Everything in Creator</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Unlimited storage</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>All premium features</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Priority support</span>
+                    </div>
+                </div>
+                <a href="#get-started" class="block w-full px-4 py-3 bg-gray-100 text-gray-800 font-medium rounded-lg text-center hover:bg-gray-200 transition-colors">
+                    Get Unlimited
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-forge-100 text-forge-800 mb-4">FAQ</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Common Questions</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Everything you need to know about Forge. Can't find an answer? Contact us.
+            </p>
+        </div>
+        
+        <div class="max-w-3xl mx-auto">
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm animate-fade-in-up">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition-colors">
+                        <h3 class="text-lg font-semibold">Is Forge really free to use?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">
+                            Yes! The Starter plan is completely free forever with all core tools available. We offer paid plans with more storage and advanced features for those who need them.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm animate-fade-in-up animate-delay-100">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition-colors">
+                        <h3 class="text-lg font-semibold">Can I use Forge offline?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">
+                            Currently, Forge requires an internet connection. We're working on offline capabilities that will be available in a future update.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm animate-fade-in-up animate-delay-200">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition-colors">
+                        <h3 class="text-lg font-semibold">How does Forge make money?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">
+                            We offer premium plans with additional storage and features. These optional upgrades help support development and maintenance of the free version.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm animate-fade-in-up animate-delay-300">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition-colors">
+                        <h3 class="text-lg font-semibold">Can I export my data?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">
+                            Yes, you can export all your data at any time in standard formats (PDF, CSV, DOCX, etc.). We believe you should always have control over your data.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- About Us Section -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-forge-100 text-forge-800 mb-4">Our Story</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Building Tools for Everyone</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    Forge was born from a simple idea: powerful digital tools shouldn't be locked behind paywalls or complicated interfaces. 
+                    Our team of designers, developers, and creators are building an open ecosystem where anyone can create without limits.
+                </p>
+                <p class="text-gray-600 mb-8">
+                    Since 2020, we've been committed to making professional-grade tools accessible to students, entrepreneurs, and creative professionals worldwide.
+                </p>
+                <a href="#" class="px-6 py-3 rounded-lg bg-white border border-gray-300 text-gray-800 font-medium hover:bg-gray-50 transition-colors shadow-sm hover:shadow-md inline-flex items-center">
+                    Read Our Story
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+            <div class="order-1 md:order-2">
+                <img src="images/ourstory.svg" alt="Our team working together" class="w-full h-auto max-w-md mx-auto rounded-lg shadow-sm">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Calendar Tool Section -->
+<section id="calendar-tool" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-forge-100 text-forge-800 mb-4">Productivity Tool</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Smart Calendar</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Organize your schedule, set reminders, and never miss an important event again.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Calendar Demo -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-medium text-gray-900">June 2025</h3>
+                        <div class="flex space-x-2">
+                            <button class="p-1 rounded-md hover:bg-gray-200 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <button class="p-1 rounded-md hover:bg-gray-200 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <!-- Calendar Grid -->
+                    <div class="grid grid-cols-7 gap-1 mb-2">
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">Sun</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">Mon</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">Tue</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">Wed</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">Thu</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">Fri</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">Sat</div>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1">
+                        <!-- Calendar Days -->
+                        <div class="h-10"></div> <!-- Empty day -->
+                        <div class="h-10"></div> <!-- Empty day -->
+                        <div class="h-10 flex items-center justify-center text-gray-900">1</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">2</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">3</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">4</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">5</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">6</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">7</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">8</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">9</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">10</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">11</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">12</div>
+                        <div class="h-10 flex items-center justify-center bg-forge-100 text-forge-800 rounded-full font-medium">13</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">14</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">15</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">16</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">17</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">18</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">19</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">20</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">21</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">22</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">23</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">24</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">25</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">26</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">27</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">28</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">29</div>
+                        <div class="h-10 flex items-center justify-center text-gray-900">30</div>
+                    </div>
+                </div>
+                
+                <!-- Event List -->
+                <div class="border-t border-gray-200 p-4">
+                    <h4 class="font-medium text-gray-900 mb-3">Today's Events</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-2 w-2 mt-2 rounded-full bg-forge-600"></div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Team Meeting</p>
+                                <p class="text-sm text-gray-500">10:00 AM - 11:00 AM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-2 w-2 mt-2 rounded-full bg-blue-600"></div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Lunch with Sarah</p>
+                                <p class="text-sm text-gray-500">12:30 PM - 1:30 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Description -->
+            <div>
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Stay Organized and Productive</h3>
+                    <p class="text-gray-600 mb-4">
+                        Forge Calendar helps you manage your time effectively with intuitive scheduling, smart reminders, and seamless integration with all your other Forge tools.
+                    </p>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Visual scheduling with color-coded events</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Smart reminders via email and notifications</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Team scheduling and shared calendars</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600 mr-2 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Recurring events and custom repeat patterns</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="#get-started" class="px-6 py-3 rounded-lg gradient-bg text-white font-medium hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl">
+                        Try Calendar Now
+                    </a>
+                    <a href="#" class="px-6 py-3 rounded-lg bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors shadow-sm hover:shadow-md">
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Get Started Section - Inspired by Apple -->
+    <section id="get-started" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Forge Your Future?</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                Join thousands of creators, students, and professionals who are already building with Forge.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#" class="px-6 py-3 rounded-lg bg-white text-gray-900 font-medium hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl">
+                    Get Started for Free
+                </a>
+                <a href="#" class="px-6 py-3 rounded-lg bg-gray-800 text-white font-medium hover:bg-gray-700 transition-colors shadow hover:shadow-md border border-gray-700">
+                    Compare Plans
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zoho-inspired Footer -->
+    <footer class="bg-gray-100 text-gray-600 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div class="col-span-2">
+                    <a href="#" class="flex items-center space-x-2 mb-6">
+                        <img src="images/logo.svg" alt="Forge Logo" class="h-8 w-auto">
+                        <span class="text-xl font-medium text-gray-900">Forge</span>
+                    </a>
+                    <p class="text-sm mb-6">
+                        The complete open-source toolkit for creators, students, and professionals.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-forge-600 transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-forge-600 transition-colors">
+                            <span class="sr-only">GitHub</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Product</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-sm hover:text-forge-600 transition-colors">Features</a></li>
+                        <li><a href="#tools" class="text-sm hover:text-forge-600 transition-colors">Tools</a></li>
+                        <li><a href="#pricing" class="text-sm hover:text-forge-600 transition-colors">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Resources</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">About</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm">
+                    &copy; 2023 Forge. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex space-x-6">
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Privacy</a>
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Terms</a>
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('nav button').addEventListener('click', function() {
+            // Implement mobile menu toggle functionality here
+            console.log('Mobile menu toggled');
+        });
+
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('svg');
+                
+                // Toggle content visibility
+                content.classList.toggle('hidden');
+                
+                // Toggle icon rotation
+                icon.classList.toggle('rotate-180');
+                
+                // Close other open FAQs
+                document.querySelectorAll('.faq-toggle').forEach(otherButton => {
+                    if (otherButton !== button) {
+                        otherButton.nextElementSibling.classList.add('hidden');
+                        otherButton.querySelector('svg').classList.remove('rotate-180');
+                    }
+                });
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-fade-in-up');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Run once on page load
+        animateOnScroll();
+        
+        // Run on scroll
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>

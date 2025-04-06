@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge - Digital Tool Suite</title>
+    <meta name="description" content="Free, open-source digital tools for students, creators, business owners, and employees. A comprehensive suite to boost your productivity.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        forge: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in forwards',
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.2), 0 10px 10px -5px rgba(249, 115, 22, 0.1);
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .animate-delay-100 {
+            animation-delay: 0.1s;
+        }
+        .animate-delay-200 {
+            animation-delay: 0.2s;
+        }
+        .animate-delay-300 {
+            animation-delay: 0.3s;
+        }
+        .animate-delay-400 {
+            animation-delay: 0.4s;
+        }
+        .animate-delay-500 {
+            animation-delay: 0.5s;
+        }
+        .header-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-white font-sans text-gray-800 antialiased">
+<!-- Updated Navigation Section -->
+<!-- Updated Navigation Section -->
+<!-- Updated Navigation Section -->
+<nav class="fixed w-full bg-white/80 header-blur shadow-sm z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex items-center">
+                <a href="#" class="flex items-center space-x-2">
+                    <img src="images/logo.svg" alt="Forge Logo" class="h-8 w-auto">
+                    <span class="text-xl font-medium text-gray-900">Forge</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">Features</a>
+                
+                <!-- Tools Dropdown -->
+                <div class="relative group" x-data="{ open: false, activeCategory: 'productivity' }" @mouseenter="open = true" @mouseleave="open = false">
+                    <button class="text-gray-600 hover:text-forge-600 transition-colors font-medium flex items-center">
+                        Tools
+                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Dropdown Panel -->
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" 
+                         x-transition:enter-start="opacity-0 translate-y-1" 
+                         x-transition:enter-end="opacity-100 translate-y-0" 
+                         x-transition:leave="transition ease-in duration-150" 
+                         x-transition:leave-start="opacity-100 translate-y-0" 
+                         x-transition:leave-end="opacity-0 translate-y-1"
+                         class="absolute left-0 mt-2 w-[600px] bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
+                         @mouseenter="open = true" @mouseleave="open = false">
+                        <div class="grid grid-cols-3">
+                            <!-- Categories Column -->
+                            <div class="col-span-1 bg-gray-50 p-4">
+                                <h3 class="font-medium text-gray-900 mb-3">Categories</h3>
+                                <ul class="space-y-2">
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'productivity'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'productivity', 'text-gray-700': activeCategory !== 'productivity' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Productivity
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'design'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'design', 'text-gray-700': activeCategory !== 'design' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Design
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'data'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'data', 'text-gray-700': activeCategory !== 'data' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Data Tools
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'writing'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'writing', 'text-gray-700': activeCategory !== 'writing' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Writing
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Tools Column -->
+                            <div class="col-span-2 p-4">
+                                <!-- Productivity Tools -->
+                                <div x-show="activeCategory === 'productivity'" class="space-y-3">
+                                    <h4 class="font-medium text-gray-900 mb-2">Productivity Tools</h4>
+                                    <a href="./tasks.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Task Manager</p>
+                                        <p class="text-sm text-gray-500">Organize your tasks and to-dos</p>
+                                    </a>
+                                    <a href="./calander.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Calendar</p>
+                                        <p class="text-sm text-gray-500">Manage your schedule and events</p>
+                                    </a>
+                                    <a href="./qrcode.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">QR Code Generator</p>
+                                        <p class="text-sm text-gray-500">Create QR codes for any content</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Design Tools -->
+                                <div x-show="activeCategory === 'design'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Design Tools</h4>
+                                    <a href="./designer.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Designer</p>
+                                        <p class="text-sm text-gray-500">Create graphics and visual designs</p>
+                                    </a>
+                                    <a href="./whiteboard.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Whiteboard</p>
+                                        <p class="text-sm text-gray-500">Collaborate visually in real-time</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Data Tools -->
+                                <div x-show="activeCategory === 'data'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Data Tools</h4>
+                                    <a href="./datavisualization.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Data Visualization</p>
+                                        <p class="text-sm text-gray-500">Transform data into visual insights</p>
+                                    </a>
+                                    <a href="./compressor.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">File Compressor</p>
+                                        <p class="text-sm text-gray-500">Reduce file sizes efficiently</p>
+                                    </a>
+                                    <a href="./encryption.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Encryption Tool</p>
+                                        <p class="text-sm text-gray-500">Secure your sensitive data</p>
+                                    </a>
+                                    <a href="./spreadsheets.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Spreadsheets</p>
+                                        <p class="text-sm text-gray-500">Analyze and organize data</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Writing Tools -->
+                                <div x-show="activeCategory === 'writing'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Writing Tools</h4>
+                                    <a href="./grammar.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Grammar Checker</p>
+                                        <p class="text-sm text-gray-500">Improve your writing quality</p>
+                                    </a>
+                                    <a href="./notes.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Notes</p>
+                                        <p class="text-sm text-gray-500">Capture and organize your thoughts</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#pricing" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">Pricing</a>
+                <a href="#faq" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">FAQ</a>
+            </div>
+            <div class="flex items-center">
+                <a href="#get-started" class="hidden md:block px-4 py-2 rounded-lg bg-forge-600 text-white font-medium hover:bg-forge-700 transition-colors shadow-md">
+                    Get Started
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-forge-600 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Features</a>
+            <a href="#tools" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Tools</a>
+            <a href="#pricing" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Pricing</a>
+            <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">FAQ</a>
+            <a href="#get-started" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-forge-600 hover:bg-forge-700">Get Started</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Add this right before your closing </body> tag -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<!-- Updated JavaScript -->
+<script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', function() {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('hidden');
+        
+        // Toggle between menu and close icon
+        if (!isExpanded) {
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            `;
+        } else {
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        }
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        });
+    });
+
+    // FAQ toggle functionality
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            
+            // Toggle content visibility
+            content.classList.toggle('hidden');
+            
+            // Toggle icon rotation
+            icon.classList.toggle('rotate-180');
+            
+            // Close other open FAQs
+            document.querySelectorAll('.faq-toggle').forEach(otherButton => {
+                if (otherButton !== button) {
+                    otherButton.nextElementSibling.classList.add('hidden');
+                    otherButton.querySelector('svg').classList.remove('rotate-180');
+                }
+            });
+        });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Animation on scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.animate-fade-in-up');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
+            
+            if (elementPosition < screenPosition) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    // Run once on page load
+    animateOnScroll();
+    
+    // Run on scroll
+    window.addEventListener('scroll', animateOnScroll);
+</script>
+
+
+<section id="spreadsheet-tool" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-forge-100 text-forge-800 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Productivity Tools
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Spreadsheet</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Organize data, calculate with formulas, and visualize with charts - all without complexity
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Sheets List -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+        <div class="p-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+          <h3 class="font-medium text-gray-900">Your Sheets</h3>
+          <button id="new-sheet" class="p-1 rounded-md hover:bg-gray-200 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forge-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="relative mb-4">
+            <input type="text" id="search-sheets" placeholder="Search sheets..." class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-forge-500 focus:border-forge-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 absolute left-3 top-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <div class="space-y-2 max-h-[500px] overflow-y-auto" id="sheets-list">
+            <!-- Sheets will be dynamically inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Spreadsheet Editor -->
+      <div class="md:col-span-2">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 h-full">
+          <div class="p-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+            <input type="text" id="sheet-title" placeholder="Sheet title" class="bg-transparent font-medium text-gray-900 focus:outline-none w-full">
+            <div class="flex space-x-2">
+              <button id="save-sheet" class="p-1 text-gray-600 hover:text-forge-600 transition-colors" title="Save">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                </svg>
+              </button>
+              <button id="delete-sheet" class="p-1 text-gray-600 hover:text-red-600 transition-colors" title="Delete">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <div class="flex space-x-2 mb-4">
+              <button id="add-chart" class="p-1.5 rounded-md text-sm font-medium bg-forge-600 text-white hover:bg-forge-700 transition-colors flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Add Chart
+              </button>
+              <button id="export-csv" class="p-1.5 rounded-md text-sm font-medium border border-gray-300 hover:bg-gray-100 transition-colors flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Export CSV
+              </button>
+            </div>
+            <div id="spreadsheet" class="overflow-auto max-h-[500px] border border-gray-300 rounded-md">
+              <!-- Spreadsheet grid will be rendered here -->
+            </div>
+            <div id="chart-container" class="mt-4 hidden">
+              <div class="border-b border-gray-200 mb-4 pb-2 flex justify-between items-center">
+                <h3 class="font-medium">Chart Preview</h3>
+                <button id="remove-chart" class="text-gray-500 hover:text-red-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div id="chart-preview" class="h-64 bg-gray-50 rounded-md flex items-center justify-center text-gray-400">
+                Select data range to generate chart
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Spreadsheet data and state
+  let sheets = JSON.parse(localStorage.getItem('forge-sheets')) || [];
+  let currentSheetId = null;
+  let currentSheetData = [];
+  const COLS = 10;
+  const ROWS = 30;
+  
+  // DOM elements
+  const sheetsList = document.getElementById('sheets-list');
+  const spreadsheetEl = document.getElementById('spreadsheet');
+  const sheetTitleInput = document.getElementById('sheet-title');
+  const newSheetBtn = document.getElementById('new-sheet');
+  const saveSheetBtn = document.getElementById('save-sheet');
+  const deleteSheetBtn = document.getElementById('delete-sheet');
+  const searchSheetsInput = document.getElementById('search-sheets');
+  const addChartBtn = document.getElementById('add-chart');
+  const exportCsvBtn = document.getElementById('export-csv');
+  const chartContainer = document.getElementById('chart-container');
+  const chartPreview = document.getElementById('chart-preview');
+  const removeChartBtn = document.getElementById('remove-chart');
+
+  // Initialize the app
+  function init() {
+    renderSheetsList();
+    createSpreadsheetGrid();
+    if (sheets.length > 0) {
+      loadSheet(sheets[0].id);
+    }
+    
+    // Set up event listeners
+    newSheetBtn.addEventListener('click', createNewSheet);
+    saveSheetBtn.addEventListener('click', saveCurrentSheet);
+    deleteSheetBtn.addEventListener('click', deleteCurrentSheet);
+    searchSheetsInput.addEventListener('input', filterSheets);
+    addChartBtn.addEventListener('click', generateChart);
+    exportCsvBtn.addEventListener('click', exportToCSV);
+    removeChartBtn.addEventListener('click', () => {
+      chartContainer.classList.add('hidden');
+    });
+    
+    // Auto-save every 30 seconds
+    setInterval(saveCurrentSheet, 30000);
+  }
+
+  // Create the spreadsheet grid
+  function createSpreadsheetGrid() {
+    // Create header row (A, B, C...)
+    let html = '<table class="w-full border-collapse"><thead><tr><th class="w-10 h-10 bg-gray-100 border border-gray-300"></th>';
+    for (let i = 0; i < COLS; i++) {
+      html += `<th class="w-24 h-10 bg-gray-100 border border-gray-300 font-medium">${String.fromCharCode(65 + i)}</th>`;
+    }
+    html += '</tr></thead><tbody>';
+    
+    // Create data rows
+    for (let i = 1; i <= ROWS; i++) {
+      html += `<tr><td class="w-10 h-10 bg-gray-100 border border-gray-300 text-center font-medium">${i}</td>`;
+      for (let j = 0; j < COLS; j++) {
+        html += `<td class="border border-gray-300"><input type="text" data-row="${i}" data-col="${j}" class="w-full h-10 px-2 focus:outline-none focus:ring-2 focus:ring-forge-500 focus:border-forge-500"></td>`;
+      }
+      html += '</tr>';
+    }
+    html += '</tbody></table>';
+    
+    spreadsheetEl.innerHTML = html;
+    
+    // Add event listeners to all cells
+    const inputs = spreadsheetEl.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('input', handleCellInput);
+      input.addEventListener('focus', handleCellFocus);
+    });
+  }
+
+  // Handle cell input
+  function handleCellInput(e) {
+    const row = parseInt(e.target.dataset.row);
+    const col = parseInt(e.target.dataset.col);
+    const value = e.target.value;
+    
+    // Initialize row if needed
+    if (!currentSheetData[row]) {
+      currentSheetData[row] = [];
+    }
+    
+    currentSheetData[row][col] = value;
+    
+    // If the input starts with =, it's a formula
+    if (value.startsWith('=')) {
+      e.target.classList.add('text-blue-600');
+      try {
+        const result = evaluateFormula(value.substring(1));
+        e.target.value = result;
+        currentSheetData[row][col] = { formula: value, value: result };
+      } catch (error) {
+        e.target.value = '#ERROR';
+        currentSheetData[row][col] = { formula: value, value: '#ERROR' };
+      }
+    } else {
+      e.target.classList.remove('text-blue-600');
+    }
+  }
+
+  // Handle cell focus to show formula if exists
+  function handleCellFocus(e) {
+    const row = parseInt(e.target.dataset.row);
+    const col = parseInt(e.target.dataset.col);
+    
+    if (currentSheetData[row] && currentSheetData[row][col] && typeof currentSheetData[row][col] === 'object') {
+      e.target.value = currentSheetData[row][col].formula;
+    }
+  }
+
+  // Evaluate simple formulas
+  function evaluateFormula(formula) {
+    // Basic arithmetic
+    if (/^[\d+\-*/. ]+$/.test(formula)) {
+      return eval(formula); // Safe here because of the regex check
+    }
+    
+    // SUM function (e.g., SUM(A1:A5))
+    const sumMatch = formula.match(/^SUM\(([A-Z])(\d+):([A-Z])(\d+)\)$/i);
+    if (sumMatch) {
+      const col1 = sumMatch[1].toUpperCase().charCodeAt(0) - 65;
+      const row1 = parseInt(sumMatch[2]);
+      const col2 = sumMatch[3].toUpperCase().charCodeAt(0) - 65;
+      const row2 = parseInt(sumMatch[4]);
+      
+      let sum = 0;
+      for (let r = row1; r <= row2; r++) {
+        for (let c = col1; c <= col2; c++) {
+          if (currentSheetData[r] && currentSheetData[r][c]) {
+            const val = typeof currentSheetData[r][c] === 'object' ? currentSheetData[r][c].value : currentSheetData[r][c];
+            const num = parseFloat(val);
+            if (!isNaN(num)) sum += num;
+          }
+        }
+      }
+      return sum;
+    }
+    
+    // AVG function (similar to SUM)
+    const avgMatch = formula.match(/^AVG\(([A-Z])(\d+):([A-Z])(\d+)\)$/i);
+    if (avgMatch) {
+      const col1 = avgMatch[1].toUpperCase().charCodeAt(0) - 65;
+      const row1 = parseInt(avgMatch[2]);
+      const col2 = avgMatch[3].toUpperCase().charCodeAt(0) - 65;
+      const row2 = parseInt(avgMatch[4]);
+      
+      let sum = 0;
+      let count = 0;
+      for (let r = row1; r <= row2; r++) {
+        for (let c = col1; c <= col2; c++) {
+          if (currentSheetData[r] && currentSheetData[r][c]) {
+            const val = typeof currentSheetData[r][c] === 'object' ? currentSheetData[r][c].value : currentSheetData[r][c];
+            const num = parseFloat(val);
+            if (!isNaN(num)) {
+              sum += num;
+              count++;
+            }
+          }
+        }
+      }
+      return count > 0 ? sum / count : 0;
+    }
+    
+    throw new Error('Unsupported formula');
+  }
+
+  // Render the sheets list
+  function renderSheetsList(filter = '') {
+    sheetsList.innerHTML = '';
+    
+    const filteredSheets = filter 
+      ? sheets.filter(sheet => sheet.title.toLowerCase().includes(filter.toLowerCase()))
+      : sheets;
+    
+    if (filteredSheets.length === 0) {
+      sheetsList.innerHTML = '<p class="text-gray-500 text-center py-4">No sheets found</p>';
+      return;
+    }
+    
+    filteredSheets.forEach(sheet => {
+      const sheetEl = document.createElement('div');
+      sheetEl.className = `p-3 rounded-md cursor-pointer flex justify-between items-center ${currentSheetId === sheet.id ? 'bg-forge-100' : 'hover:bg-gray-100'}`;
+      sheetEl.innerHTML = `
+        <span>${sheet.title}</span>
+        <span class="text-xs text-gray-500">${new Date(sheet.updatedAt).toLocaleDateString()}</span>
+      `;
+      sheetEl.addEventListener('click', () => loadSheet(sheet.id));
+      sheetsList.appendChild(sheetEl);
+    });
+  }
+
+  // Create a new sheet
+  function createNewSheet() {
+    const newSheet = {
+      id: Date.now().toString(),
+      title: 'Untitled Sheet',
+      data: {},
+      updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString()
+    };
+    
+    sheets.unshift(newSheet);
+    currentSheetId = newSheet.id;
+    currentSheetData = [];
+    sheetTitleInput.value = newSheet.title;
+    
+    // Clear all inputs
+    const inputs = spreadsheetEl.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('text-blue-600');
+    });
+    
+    saveToLocalStorage();
+    renderSheetsList();
+  }
+
+  // Load a sheet
+  function loadSheet(sheetId) {
+    const sheet = sheets.find(s => s.id === sheetId);
+    if (!sheet) return;
+    
+    currentSheetId = sheetId;
+    currentSheetData = sheet.data || [];
+    sheetTitleInput.value = sheet.title;
+    
+    // Update the UI
+    const inputs = spreadsheetEl.querySelectorAll('input');
+    inputs.forEach(input => {
+      const row = parseInt(input.dataset.row);
+      const col = parseInt(input.dataset.col);
+      
+      if (currentSheetData[row] && currentSheetData[row][col]) {
+        if (typeof currentSheetData[row][col] === 'object') {
+          input.value = currentSheetData[row][col].value;
+          input.classList.add('text-blue-600');
+        } else {
+          input.value = currentSheetData[row][col];
+          input.classList.remove('text-blue-600');
+        }
+      } else {
+        input.value = '';
+        input.classList.remove('text-blue-600');
+      }
+    });
+    
+    renderSheetsList();
+  }
+
+  // Save current sheet
+  function saveCurrentSheet() {
+    if (!currentSheetId) return;
+    
+    const sheetIndex = sheets.findIndex(s => s.id === currentSheetId);
+    if (sheetIndex === -1) return;
+    
+    sheets[sheetIndex].title = sheetTitleInput.value || 'Untitled Sheet';
+    sheets[sheetIndex].data = currentSheetData;
+    sheets[sheetIndex].updatedAt = new Date().toISOString();
+    
+    saveToLocalStorage();
+    renderSheetsList();
+  }
+
+  // Delete current sheet
+  function deleteCurrentSheet() {
+    if (!currentSheetId) return;
+    
+    if (confirm('Are you sure you want to delete this sheet?')) {
+      sheets = sheets.filter(s => s.id !== currentSheetId);
+      saveToLocalStorage();
+      
+      if (sheets.length > 0) {
+        loadSheet(sheets[0].id);
+      } else {
+        currentSheetId = null;
+        currentSheetData = [];
+        sheetTitleInput.value = '';
+        
+        const inputs = spreadsheetEl.querySelectorAll('input');
+        inputs.forEach(input => {
+          input.value = '';
+          input.classList.remove('text-blue-600');
+        });
+      }
+      
+      renderSheetsList();
+    }
+  }
+
+  // Filter sheets
+  function filterSheets() {
+    renderSheetsList(searchSheetsInput.value);
+  }
+
+  // Generate a chart from selected data
+  function generateChart() {
+    // In a real implementation, you would use a charting library like Chart.js
+    // This is a simplified version for demonstration
+    
+    // Find some numeric data to chart (first 5 rows of column A in this example)
+    const chartData = [];
+    for (let r = 1; r <= 5; r++) {
+      if (currentSheetData[r] && currentSheetData[r][0]) {
+        const val = typeof currentSheetData[r][0] === 'object' ? currentSheetData[r][0].value : currentSheetData[r][0];
+        const num = parseFloat(val);
+        if (!isNaN(num)) chartData.push(num);
+      }
+    }
+    
+    if (chartData.length === 0) {
+      chartPreview.innerHTML = '<p class="text-gray-500">No numeric data found to chart</p>';
+    } else {
+      // Create a simple bar chart using divs (in a real app, use Chart.js or similar)
+      let chartHtml = '<div class="flex items-end h-48 gap-x-2">';
+      const maxVal = Math.max(...chartData);
+      
+      chartData.forEach((val, i) => {
+        const height = (val / maxVal) * 100;
+        chartHtml += `
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-full bg-forge-600 rounded-t-sm" style="height: ${height}%"></div>
+            <span class="text-xs mt-1">${String.fromCharCode(65 + i)}${i + 1}</span>
+          </div>
+        `;
+      });
+      
+      chartHtml += '</div>';
+      chartPreview.innerHTML = chartHtml;
+    }
+    
+    chartContainer.classList.remove('hidden');
+  }
+
+  // Export to CSV
+  function exportToCSV() {
+    if (!currentSheetId) return;
+    
+    let csv = '';
+    
+    // Add headers (A, B, C...)
+    csv += ',' + Array.from({ length: COLS }, (_, i) => String.fromCharCode(65 + i)).join(',') + '\n';
+    
+    // Add data rows
+    for (let r = 1; r <= ROWS; r++) {
+      csv += r; // Row number
+      
+      for (let c = 0; c < COLS; c++) {
+        csv += ',';
+        
+        if (currentSheetData[r] && currentSheetData[r][c]) {
+          const val = typeof currentSheetData[r][c] === 'object' ? currentSheetData[r][c].value : currentSheetData[r][c];
+          csv += `"${val.toString().replace(/"/g, '""')}"`;
+        }
+      }
+      
+      csv += '\n';
+    }
+    
+    // Create download link
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${sheetTitleInput.value || 'sheet'}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // Save to localStorage
+  function saveToLocalStorage() {
+    localStorage.setItem('forge-sheets', JSON.stringify(sheets));
+  }
+
+  // Initialize the app
+  init();
+});
+</script>
+    <!-- Zoho-inspired Footer -->
+    <footer class="bg-gray-100 text-gray-600 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div class="col-span-2">
+                    <a href="#" class="flex items-center space-x-2 mb-6">
+                        <img src="images/logo.svg" alt="Forge Logo" class="h-8 w-auto">
+                        <span class="text-xl font-medium text-gray-900">Forge</span>
+                    </a>
+                    <p class="text-sm mb-6">
+                        The complete open-source toolkit for creators, students, and professionals.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-forge-600 transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-forge-600 transition-colors">
+                            <span class="sr-only">GitHub</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Product</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-sm hover:text-forge-600 transition-colors">Features</a></li>
+                        <li><a href="#tools" class="text-sm hover:text-forge-600 transition-colors">Tools</a></li>
+                        <li><a href="#pricing" class="text-sm hover:text-forge-600 transition-colors">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Resources</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">About</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm">
+                    &copy; 2023 Forge. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex space-x-6">
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Privacy</a>
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Terms</a>
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

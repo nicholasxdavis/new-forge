@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge - Digital Tool Suite</title>
+    <meta name="description" content="Free, open-source digital tools for students, creators, business owners, and employees. A comprehensive suite to boost your productivity.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        forge: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in forwards',
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.2), 0 10px 10px -5px rgba(249, 115, 22, 0.1);
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .animate-delay-100 {
+            animation-delay: 0.1s;
+        }
+        .animate-delay-200 {
+            animation-delay: 0.2s;
+        }
+        .animate-delay-300 {
+            animation-delay: 0.3s;
+        }
+        .animate-delay-400 {
+            animation-delay: 0.4s;
+        }
+        .animate-delay-500 {
+            animation-delay: 0.5s;
+        }
+        .header-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-white font-sans text-gray-800 antialiased">
+<!-- Updated Navigation Section -->
+<!-- Updated Navigation Section -->
+<nav class="fixed w-full bg-white/80 header-blur shadow-sm z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex items-center">
+                <a href="#" class="flex items-center space-x-2">
+                    <img src="images/logo.svg" alt="Forge Logo" class="h-8 w-auto">
+                    <span class="text-xl font-medium text-gray-900">Forge</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">Features</a>
+                
+                <!-- Tools Dropdown -->
+                <div class="relative group" x-data="{ open: false, activeCategory: 'productivity' }" @mouseenter="open = true" @mouseleave="open = false">
+                    <button class="text-gray-600 hover:text-forge-600 transition-colors font-medium flex items-center">
+                        Tools
+                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Dropdown Panel -->
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" 
+                         x-transition:enter-start="opacity-0 translate-y-1" 
+                         x-transition:enter-end="opacity-100 translate-y-0" 
+                         x-transition:leave="transition ease-in duration-150" 
+                         x-transition:leave-start="opacity-100 translate-y-0" 
+                         x-transition:leave-end="opacity-0 translate-y-1"
+                         class="absolute left-0 mt-2 w-[600px] bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
+                         @mouseenter="open = true" @mouseleave="open = false">
+                        <div class="grid grid-cols-3">
+                            <!-- Categories Column -->
+                            <div class="col-span-1 bg-gray-50 p-4">
+                                <h3 class="font-medium text-gray-900 mb-3">Categories</h3>
+                                <ul class="space-y-2">
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'productivity'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'productivity', 'text-gray-700': activeCategory !== 'productivity' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Productivity
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'design'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'design', 'text-gray-700': activeCategory !== 'design' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Design
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'data'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'data', 'text-gray-700': activeCategory !== 'data' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Data Tools
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button @mouseenter="activeCategory = 'writing'" 
+                                                :class="{ 'text-forge-600 bg-white shadow-sm': activeCategory === 'writing', 'text-gray-700': activeCategory !== 'writing' }"
+                                                class="w-full text-left px-3 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                                            Writing
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Tools Column -->
+                            <div class="col-span-2 p-4">
+                                <!-- Productivity Tools -->
+                                <div x-show="activeCategory === 'productivity'" class="space-y-3">
+                                    <h4 class="font-medium text-gray-900 mb-2">Productivity Tools</h4>
+                                    <a href="./tasks.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Task Manager</p>
+                                        <p class="text-sm text-gray-500">Organize your tasks and to-dos</p>
+                                    </a>
+                                    <a href="./calander.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Calendar</p>
+                                        <p class="text-sm text-gray-500">Manage your schedule and events</p>
+                                    </a>
+                                    <a href="./qrcode.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">QR Code Generator</p>
+                                        <p class="text-sm text-gray-500">Create QR codes for any content</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Design Tools -->
+                                <div x-show="activeCategory === 'design'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Design Tools</h4>
+                                    <a href="./designer.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Designer</p>
+                                        <p class="text-sm text-gray-500">Create graphics and visual designs</p>
+                                    </a>
+                                    <a href="./whiteboard.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Whiteboard</p>
+                                        <p class="text-sm text-gray-500">Collaborate visually in real-time</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Data Tools -->
+                                <div x-show="activeCategory === 'data'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Data Tools</h4>
+                                    <a href="./datavisualization.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Data Visualization</p>
+                                        <p class="text-sm text-gray-500">Transform data into visual insights</p>
+                                    </a>
+                                    <a href="./compressor.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">File Compressor</p>
+                                        <p class="text-sm text-gray-500">Reduce file sizes efficiently</p>
+                                    </a>
+                                    <a href="./encryption.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Encryption Tool</p>
+                                        <p class="text-sm text-gray-500">Secure your sensitive data</p>
+                                    </a>
+                                    <a href="./spreadsheets.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Spreadsheets</p>
+                                        <p class="text-sm text-gray-500">Analyze and organize data</p>
+                                    </a>
+                                </div>
+                                
+                                <!-- Writing Tools -->
+                                <div x-show="activeCategory === 'writing'" class="space-y-3" style="display: none;">
+                                    <h4 class="font-medium text-gray-900 mb-2">Writing Tools</h4>
+                                    <a href="./grammar.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Grammar Checker</p>
+                                        <p class="text-sm text-gray-500">Improve your writing quality</p>
+                                    </a>
+                                    <a href="./notes.html" class="block px-3 py-2 rounded-md hover:bg-gray-50 transition-colors">
+                                        <p class="font-medium">Notes</p>
+                                        <p class="text-sm text-gray-500">Capture and organize your thoughts</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#pricing" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">Pricing</a>
+                <a href="#faq" class="text-gray-600 hover:text-forge-600 transition-colors font-medium">FAQ</a>
+            </div>
+            <div class="flex items-center">
+                <a href="#get-started" class="hidden md:block px-4 py-2 rounded-lg bg-forge-600 text-white font-medium hover:bg-forge-700 transition-colors shadow-md">
+                    Get Started
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-forge-600 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Features</a>
+            <a href="#tools" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Tools</a>
+            <a href="#pricing" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">Pricing</a>
+            <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-forge-600 hover:bg-forge-50">FAQ</a>
+            <a href="#get-started" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-forge-600 hover:bg-forge-700">Get Started</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Add this right before your closing </body> tag -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<!-- Updated JavaScript -->
+<script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', function() {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('hidden');
+        
+        // Toggle between menu and close icon
+        if (!isExpanded) {
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            `;
+        } else {
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        }
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        });
+    });
+
+    // FAQ toggle functionality
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            
+            // Toggle content visibility
+            content.classList.toggle('hidden');
+            
+            // Toggle icon rotation
+            icon.classList.toggle('rotate-180');
+            
+            // Close other open FAQs
+            document.querySelectorAll('.faq-toggle').forEach(otherButton => {
+                if (otherButton !== button) {
+                    otherButton.nextElementSibling.classList.add('hidden');
+                    otherButton.querySelector('svg').classList.remove('rotate-180');
+                }
+            });
+        });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Animation on scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.animate-fade-in-up');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
+            
+            if (elementPosition < screenPosition) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    // Run once on page load
+    animateOnScroll();
+    
+    // Run on scroll
+    window.addEventListener('scroll', animateOnScroll);
+</script>
+
+<section id="grammar-tool" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-forge-100 text-forge-800 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+        Writing Tools
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Advanced Writing Assistant</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Real-time grammar, spelling, and style suggestions powered by AI
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+      <div class="p-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <h3 class="font-medium text-gray-900">Editor</h3>
+          <div class="flex items-center space-x-2">
+            <div class="relative group">
+              <button id="writing-mode" class="flex items-center px-3 py-1 rounded-md bg-white border border-gray-300 text-sm hover:bg-gray-50 transition-colors">
+                <span>Standard</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="absolute z-10 hidden group-hover:block bg-white shadow-lg rounded-md mt-1 w-40">
+                <button data-mode="standard" class="mode-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Standard</button>
+                <button data-mode="academic" class="mode-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Academic</button>
+                <button data-mode="business" class="mode-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Business</button>
+                <button data-mode="casual" class="mode-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Casual</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex space-x-2">
+          <button id="check-text" class="flex items-center px-3 py-1 rounded-md bg-forge-600 text-white hover:bg-forge-700 transition-colors text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Check Text
+          </button>
+          <button id="clear-text" class="flex items-center px-3 py-1 rounded-md border border-gray-300 hover:bg-gray-100 transition-colors text-sm">
+            Clear
+          </button>
+        </div>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-0">
+        <!-- Input Area -->
+        <div class="p-4 border-r border-gray-200 relative">
+          <div class="absolute top-7 right-7 z-10">
+            <button id="formatting-help" class="text-gray-400 hover:text-forge-600 transition-colors" title="Formatting Help">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </button>
+          </div>
+          <div id="grammar-input" class="prose max-w-none h-96 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-forge-500 focus:border-forge-500 overflow-y-auto" contenteditable="true" spellcheck="false"></div>
+          <div class="mt-2 text-sm text-gray-500 flex justify-between">
+            <div>
+              <span id="word-count">0 words</span>
+              <span class="mx-2">•</span>
+              <span id="char-count">0 characters</span>
+            </div>
+            <div>
+              <span id="read-time">0 min read</span>
+              <span class="mx-2">•</span>
+              <span id="issue-count">0 issues</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Suggestions Area -->
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center">
+              <h4 class="font-medium text-gray-900 mr-2">Suggestions</h4>
+              <span id="suggestion-count" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-forge-100 text-forge-800">0</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button id="filter-all" class="filter-btn px-2 py-0.5 text-xs rounded border border-forge-600 bg-forge-600 text-white">All</button>
+              <button id="filter-grammar" class="filter-btn px-2 py-0.5 text-xs rounded border border-gray-300 hover:bg-gray-100">Grammar</button>
+              <button id="filter-spelling" class="filter-btn px-2 py-0.5 text-xs rounded border border-gray-300 hover:bg-gray-100">Spelling</button>
+              <button id="filter-style" class="filter-btn px-2 py-0.5 text-xs rounded border border-gray-300 hover:bg-gray-100">Style</button>
+            </div>
+          </div>
+          <div id="suggestions-list" class="h-96 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-200">
+            <div class="p-4 text-center text-gray-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              <p>Your suggestions will appear here</p>
+              <p class="text-sm mt-1">Click "Check Text" to analyze your writing</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<style>
+.highlight-spelling {
+  position: relative;
+}
+.highlight-spelling::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    #ef4444,
+    #ef4444 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+</style>
+
+
+<section id="grammar-tool" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-forge-100 text-forge-800 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+        Writing Tools
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Advanced Writing Assistant</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Real-time grammar, spelling, and style suggestions powered by AI
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+      <div class="p-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <h3 class="font-medium text-gray-900">Editor</h3>
+          <div class="flex items-center space-x-2">
+            <div class="relative group">
+              <button id="writing-mode" class="flex items-center px-3 py-1 rounded-md bg-white border border-gray-300 text-sm hover:bg-gray-50 transition-colors">
+                <span>Standard</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="absolute z-10 hidden group-hover:block bg-white shadow-lg rounded-md mt-1 w-40">
+                <button data-mode="standard" class="mode-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Standard</button>
+                <button data-mode="academic" class="mode-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Academic</button>
+                <button data-mode="business" class="mode-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Business</button>
+                <button data-mode="casual" class="mode-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Casual</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex space-x-2">
+          <button id="check-text" class="flex items-center px-3 py-1 rounded-md bg-forge-600 text-white hover:bg-forge-700 transition-colors text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Check Text
+          </button>
+          <button id="clear-text" class="flex items-center px-3 py-1 rounded-md border border-gray-300 hover:bg-gray-100 transition-colors text-sm">
+            Clear
+          </button>
+        </div>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-0">
+        <!-- Input Area -->
+        <div class="p-4 border-r border-gray-200 relative">
+          <div class="absolute top-7 right-7 z-10">
+            <button id="formatting-help" class="text-gray-400 hover:text-forge-600 transition-colors" title="Formatting Help">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </button>
+          </div>
+          <div id="grammar-input" class="prose max-w-none h-96 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-forge-500 focus:border-forge-500 overflow-y-auto" contenteditable="true" spellcheck="false"></div>
+          <div class="mt-2 text-sm text-gray-500 flex justify-between">
+            <div>
+              <span id="word-count">0 words</span>
+              <span class="mx-2">•</span>
+              <span id="char-count">0 characters</span>
+            </div>
+            <div>
+              <span id="read-time">0 min read</span>
+              <span class="mx-2">•</span>
+              <span id="issue-count">0 issues</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Suggestions Area -->
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center">
+              <h4 class="font-medium text-gray-900 mr-2">Suggestions</h4>
+              <span id="suggestion-count" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-forge-100 text-forge-800">0</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button id="filter-all" class="filter-btn px-2 py-0.5 text-xs rounded border border-forge-600 bg-forge-600 text-white">All</button>
+              <button id="filter-grammar" class="filter-btn px-2 py-0.5 text-xs rounded border border-gray-300 hover:bg-gray-100">Grammar</button>
+              <button id="filter-spelling" class="filter-btn px-2 py-0.5 text-xs rounded border border-gray-300 hover:bg-gray-100">Spelling</button>
+              <button id="filter-style" class="filter-btn px-2 py-0.5 text-xs rounded border border-gray-300 hover:bg-gray-100">Style</button>
+            </div>
+          </div>
+          <div id="suggestions-list" class="h-96 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-200">
+            <div class="p-4 text-center text-gray-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              <p>Your suggestions will appear here</p>
+              <p class="text-sm mt-1">Click "Check Text" to analyze your writing</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // DOM Elements
+  const grammarInput = document.getElementById('grammar-input');
+  const checkTextBtn = document.getElementById('check-text');
+  const clearTextBtn = document.getElementById('clear-text');
+  const suggestionsList = document.getElementById('suggestions-list');
+  const wordCountEl = document.getElementById('word-count');
+  const charCountEl = document.getElementById('char-count');
+  const readTimeEl = document.getElementById('read-time');
+  const issueCountEl = document.getElementById('issue-count');
+  const suggestionCountEl = document.getElementById('suggestion-count');
+  const writingModeBtn = document.getElementById('writing-mode');
+  const modeOptions = document.querySelectorAll('.mode-option');
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const formattingHelpBtn = document.getElementById('formatting-help');
+
+  // State
+  let currentMode = 'standard';
+  let currentFilter = 'all';
+  let suggestions = [];
+  let textMarkers = [];
+  
+  // Initialize
+  updateCounts();
+  setupEventListeners();
+  
+  function setupEventListeners() {
+    // Text input handling
+    grammarInput.addEventListener('input', function() {
+      updateCounts();
+      clearHighlights();
+    });
+    
+    // Check text button
+    checkTextBtn.addEventListener('click', checkText);
+    
+    // Clear text button
+    clearTextBtn.addEventListener('click', clearText);
+    
+    // Writing mode selection
+    modeOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        currentMode = this.dataset.mode;
+        writingModeBtn.querySelector('span').textContent = this.textContent;
+        if (suggestions.length > 0) checkText(); // Re-check with new mode
+      });
+    });
+    
+    // Filter buttons
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        currentFilter = this.id.replace('filter-', '');
+        filterButtons.forEach(b => {
+          b.classList.remove('bg-forge-600', 'text-white', 'border-forge-600');
+          b.classList.add('border-gray-300', 'hover:bg-gray-100');
+        });
+        this.classList.add('bg-forge-600', 'text-white', 'border-forge-600');
+        this.classList.remove('border-gray-300', 'hover:bg-gray-100');
+        displaySuggestions(suggestions);
+      });
+    });
+    
+    // Formatting help
+    formattingHelpBtn.addEventListener('click', showFormattingHelp);
+  }
+  
+  function updateCounts() {
+    const text = grammarInput.innerText.trim();
+    const wordCount = text ? text.split(/\s+/).length : 0;
+    const charCount = text.length;
+    const readTime = Math.ceil(wordCount / 200); // Average reading speed
+    
+    wordCountEl.textContent = `${wordCount} word${wordCount !== 1 ? 's' : ''}`;
+    charCountEl.textContent = `${charCount} character${charCount !== 1 ? 's' : ''}`;
+    readTimeEl.textContent = `${readTime} min read`;
+  }
+  
+  function clearText() {
+    grammarInput.innerHTML = '';
+    suggestions = [];
+    textMarkers = [];
+    updateCounts();
+    displaySuggestions([]);
+  }
+  
+  function clearHighlights() {
+    textMarkers.forEach(marker => {
+      const { element, originalText } = marker;
+      if (element.parentNode) {
+        element.outerHTML = originalText;
+      }
+    });
+    textMarkers = [];
+  }
+  
+  function checkText() {
+    const text = grammarInput.innerText.trim();
+    if (!text) return;
+    
+    // Clear previous highlights
+    clearHighlights();
+    
+    // Show loading state
+    suggestionsList.innerHTML = `
+      <div class="p-4 text-center text-gray-500">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-forge-600 mx-auto mb-2"></div>
+        <p>Analyzing your text...</p>
+      </div>
+    `;
+    
+    // In a real implementation, you would call your API here
+    // For this demo, we'll use a mock API call with setTimeout
+    setTimeout(() => {
+      // Mock API response - replace with actual API call
+      const mockResponse = analyzeText(text, currentMode);
+      suggestions = mockResponse.suggestions;
+      
+      // Highlight issues in text
+      highlightIssues(text, suggestions);
+      
+      // Display suggestions
+      displaySuggestions(suggestions);
+      
+      // Update issue count
+      issueCountEl.textContent = `${suggestions.length} issue${suggestions.length !== 1 ? 's' : ''}`;
+    }, 800);
+  }
+  
+  function analyzeText(text, mode) {
+    // This is a sophisticated mock analyzer
+    // In production, replace with calls to a real grammar API (like LanguageTool, Grammarly API, etc.)
+    
+    const suggestions = [];
+    const words = text.split(/\s+/);
+    const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [text];
+    
+    // Common spelling mistakes (mock database)
+    const spellingMistakes = {
+      'recieve': 'receive',
+      'seperate': 'separate',
+      'definately': 'definitely',
+      'occured': 'occurred',
+      'untill': 'until',
+      'wich': 'which',
+      'teh': 'the',
+      'adn': 'and',
+      'thier': 'their',
+      'wierd': 'weird'
+    };
+    
+    // Grammar rules (mock)
+    const grammarRules = [
+      {
+        pattern: /\b(I|you|he|she|it|we|they) (is|am|are)\b/i,
+        message: 'Subject-verb agreement error',
+        replacement: (match, p1, p2) => {
+          const correctVerb = p1.toLowerCase() === 'i' ? 'am' : 
+                            ['he', 'she', 'it'].includes(p1.toLowerCase()) ? 'is' : 'are';
+          return `${p1} ${correctVerb}`;
+        }
+      },
+      {
+        pattern: /\b(a|an) ([aeiouAEIOU])/,
+        message: 'Incorrect article usage before vowel sound',
+        replacement: (match, p1, p2) => {
+          return p1 === 'a' ? `an ${p2}` : `a ${p2}`;
+        }
+      },
+      {
+        pattern: /,\s*but\s*[^,]/,
+        message: 'Consider starting a new sentence for contrast',
+        replacement: (match) => `. But${match.split('but')[1]}`
+      }
+    ];
+    
+    // Style suggestions based on mode
+    const styleSuggestions = {
+      academic: [
+        {
+          pattern: /\b(get|got|getting)\b/gi,
+          message: 'Consider more formal alternative',
+          replacement: (match) => {
+            const alternatives = {
+              'get': 'obtain',
+              'got': 'received',
+              'getting': 'acquiring'
+            };
+            return alternatives[match.toLowerCase()] || match;
+          }
+        },
+        {
+          pattern: /\b(a lot|lots of)\b/gi,
+          message: 'Consider more precise quantification',
+          replacement: 'many'
+        }
+      ],
+      business: [
+        {
+          pattern: /\b(very|really)\b/gi,
+          message: 'Consider removing or using stronger language',
+          replacement: ''
+        },
+        {
+          pattern: /\b(thing|stuff)\b/gi,
+          message: 'Too vague - specify what you mean',
+          replacement: (match) => '[specify]'
+        }
+      ],
+      casual: [
+        {
+          pattern: /\b(utilize|commence|terminate)\b/gi,
+          message: 'Consider simpler alternative',
+          replacement: (match) => {
+            const alternatives = {
+              'utilize': 'use',
+              'commence': 'start',
+              'terminate': 'end'
+            };
+            return alternatives[match.toLowerCase()] || match;
+          }
+        }
+      ]
+    };
+    
+    // Check spelling
+    Object.keys(spellingMistakes).forEach(mistake => {
+      const regex = new RegExp(`\\b${mistake}\\b`, 'gi');
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        suggestions.push({
+          type: 'spelling',
+          context: match[0],
+          suggestion: spellingMistakes[mistake],
+          reason: 'Common spelling mistake',
+          offset: match.index,
+          length: match[0].length
+        });
+      }
+    });
+    
+    // Check grammar
+    grammarRules.forEach(rule => {
+      let match;
+      while ((match = rule.pattern.exec(text)) !== null) {
+        suggestions.push({
+          type: 'grammar',
+          context: match[0],
+          suggestion: typeof rule.replacement === 'function' ? rule.replacement(...match) : rule.replacement,
+          reason: rule.message,
+          offset: match.index,
+          length: match[0].length
+        });
+      }
+    });
+    
+    // Check style based on mode
+    if (mode !== 'standard' && styleSuggestions[mode]) {
+      styleSuggestions[mode].forEach(rule => {
+        let match;
+        while ((match = rule.pattern.exec(text)) !== null) {
+          suggestions.push({
+            type: 'style',
+            context: match[0],
+            suggestion: typeof rule.replacement === 'function' ? rule.replacement(...match) : rule.replacement,
+            reason: rule.message,
+            offset: match.index,
+            length: match[0].length
+          });
+        }
+      });
+    }
+    
+    // Check for passive voice (simplified)
+    const passiveRegex = /\b(is|are|was|were|be|being|been)\s+[a-zA-Z]+ed\b/gi;
+    let match;
+    while ((match = passiveRegex.exec(text)) !== null) {
+      suggestions.push({
+        type: 'style',
+        context: match[0],
+        suggestion: '[consider active voice]',
+        reason: 'Passive voice may weaken your writing',
+        offset: match.index,
+        length: match[0].length
+      });
+    }
+    
+    // Check for long sentences
+    sentences.forEach(sentence => {
+      if (sentence.split(/\s+/).length > 25) {
+        suggestions.push({
+          type: 'style',
+          context: sentence.trim(),
+          suggestion: '[consider breaking into shorter sentences]',
+          reason: 'Long sentence may be hard to read',
+          offset: text.indexOf(sentence),
+          length: sentence.length
+        });
+      }
+    });
+    
+    // Check for repeated words
+    for (let i = 0; i < words.length - 1; i++) {
+      if (words[i].toLowerCase() === words[i+1].toLowerCase()) {
+        suggestions.push({
+          type: 'style',
+          context: `${words[i]} ${words[i+1]}`,
+          suggestion: `[consider removing repetition]`,
+          reason: 'Repeated word',
+          offset: text.indexOf(words[i] + ' ' + words[i+1]),
+          length: (words[i] + ' ' + words[i+1]).length
+        });
+      }
+    }
+    
+    return { suggestions };
+  }
+  
+  function highlightIssues(text, suggestions) {
+    // Sort suggestions by offset (last to first) to avoid offset issues when replacing
+    const sortedSuggestions = [...suggestions].sort((a, b) => b.offset - a.offset);
+    
+    let html = grammarInput.innerHTML;
+    
+    sortedSuggestions.forEach(suggestion => {
+      const start = suggestion.offset;
+      const end = start + suggestion.length;
+      const originalText = text.substring(start, end);
+      
+      // Create highlight element
+      const highlight = document.createElement('span');
+      highlight.className = `highlight-${suggestion.type} px-0.5 rounded bg-opacity-20 ${
+        suggestion.type === 'spelling' ? 'bg-red-500' : 
+        suggestion.type === 'grammar' ? 'bg-purple-500' : 
+        'bg-blue-500'
+      } border-b border-dashed ${
+        suggestion.type === 'spelling' ? 'border-red-500' : 
+        suggestion.type === 'grammar' ? 'border-purple-500' : 
+        'border-blue-500'
+      }`;
+      highlight.textContent = originalText;
+      highlight.dataset.suggestionId = suggestions.indexOf(suggestion);
+      
+      // Replace text with highlighted version
+      html = html.substring(0, start) + highlight.outerHTML + html.substring(end);
+      
+      // Store marker for later cleanup
+      textMarkers.push({
+        element: highlight,
+        originalText: originalText
+      });
+    });
+    
+    grammarInput.innerHTML = html;
+    
+    // Add click handlers to highlights
+    document.querySelectorAll('[data-suggestion-id]').forEach(el => {
+      el.addEventListener('click', function() {
+        const suggestionId = parseInt(this.dataset.suggestionId);
+        const suggestion = suggestions[suggestionId];
+        if (suggestion) {
+          scrollToSuggestion(suggestionId);
+        }
+      });
+    });
+  }
+  
+  function displaySuggestions(suggestions) {
+    const filtered = currentFilter === 'all' 
+      ? suggestions 
+      : suggestions.filter(s => s.type === currentFilter);
+    
+    if (filtered.length === 0) {
+      suggestionsList.innerHTML = `
+        <div class="p-4 text-center text-gray-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-green-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p>No ${currentFilter === 'all' ? '' : currentFilter + ' '}issues found!</p>
+          <p class="text-sm mt-1">Your text looks good</p>
+        </div>
+      `;
+    } else {
+      suggestionsList.innerHTML = '';
+      filtered.forEach((suggestion, index) => {
+        const suggestionEl = document.createElement('div');
+        suggestionEl.className = 'p-4 hover:bg-gray-50 transition-colors suggestion-item';
+        suggestionEl.dataset.suggestionId = suggestions.indexOf(suggestion);
+        suggestionEl.innerHTML = `
+          <div class="flex items-start">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+              suggestion.type === 'grammar' 
+                ? 'bg-purple-100 text-purple-800' 
+                : suggestion.type === 'spelling'
+                ? 'bg-red-100 text-red-800'
+                : 'bg-blue-100 text-blue-800'
+            } mr-2">
+              ${suggestion.type}
+            </span>
+            <div class="flex-1">
+              <p class="text-sm font-medium mb-1">${escapeHtml(suggestion.context)}</p>
+              <p class="text-sm text-gray-600 mb-1">${escapeHtml(suggestion.reason)}</p>
+              <p class="text-sm font-medium text-forge-600">→ ${escapeHtml(suggestion.suggestion)}</p>
+            </div>
+            <div class="flex space-x-1 ml-2">
+              <button class="suggestion-apply p-1 text-gray-400 hover:text-green-600 transition-colors" title="Apply suggestion">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </button>
+              <button class="suggestion-ignore p-1 text-gray-400 hover:text-gray-600 transition-colors" title="Ignore suggestion">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        `;
+        suggestionsList.appendChild(suggestionEl);
+      });
+    }
+    
+    suggestionCountEl.textContent = filtered.length;
+  }
+  
+  function scrollToSuggestion(suggestionId) {
+    const suggestionEl = document.querySelector(`.suggestion-item[data-suggestion-id="${suggestionId}"]`);
+    if (suggestionEl) {
+      suggestionEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      suggestionEl.classList.add('bg-yellow-50');
+      setTimeout(() => {
+        suggestionEl.classList.remove('bg-yellow-50');
+      }, 2000);
+    }
+  }
+  
+  function showFormattingHelp() {
+    alert(`Formatting Help:\n\n* Use *asterisks* for bold\n* Use _underscores_ for italics\n* Use - dashes - for bullet points\n* Blank lines create new paragraphs`);
+  }
+  
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+});
+</script>
+
+<style>
+.highlight-spelling {
+  position: relative;
+}
+.highlight-spelling::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    #ef4444,
+    #ef4444 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+</style>
+    <!-- Zoho-inspired Footer -->
+    <footer class="bg-gray-100 text-gray-600 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div class="col-span-2">
+                    <a href="#" class="flex items-center space-x-2 mb-6">
+                        <img src="images/logo.svg" alt="Forge Logo" class="h-8 w-auto">
+                        <span class="text-xl font-medium text-gray-900">Forge</span>
+                    </a>
+                    <p class="text-sm mb-6">
+                        The complete open-source toolkit for creators, students, and professionals.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-forge-600 transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-forge-600 transition-colors">
+                            <span class="sr-only">GitHub</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Product</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-sm hover:text-forge-600 transition-colors">Features</a></li>
+                        <li><a href="#tools" class="text-sm hover:text-forge-600 transition-colors">Tools</a></li>
+                        <li><a href="#pricing" class="text-sm hover:text-forge-600 transition-colors">Pricing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Resources</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">About</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-sm hover:text-forge-600 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm">
+                    &copy; 2023 Forge. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex space-x-6">
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Privacy</a>
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Terms</a>
+                    <a href="#" class="text-sm hover:text-forge-600 transition-colors">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
